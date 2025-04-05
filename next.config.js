@@ -4,9 +4,11 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'vercel.app', 'careview.vercel.app'],
     unoptimized: true,
   },
+  // Ensure static assets are properly served
+  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
 }
 
 module.exports = nextConfig 
