@@ -2,25 +2,26 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import { FaDesktop, FaGlasses } from 'react-icons/fa';
 
 export default function About() {
   return (
-    <div className="container">
+    <div className="app-container">
       <Head>
         <title>About CareView - Medical Communication Training</title>
         <meta name="description" content="Learn about CareView, a simulation tool designed to help medical residents practice for the ABEM certifying exam" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="header">
-        <div className="logo">
-          <h1>CareView</h1>
-          <p className="tagline">Medical Communication Training</p>
+      <header className="app-header">
+        <div className="header-content">
+          <Link href="/" className="logo">
+            <h1 className="stylized-title">CareView</h1>
+          </Link>
+          <nav className="main-nav">
+            <Link href="/about" className="nav-link active">About</Link>
+          </nav>
         </div>
-        <nav className="main-nav">
-          <Link href="/" className="nav-link">Home</Link>
-          <Link href="/about" className="nav-link active">About</Link>
-        </nav>
       </header>
 
       <main className="main-content">
@@ -53,21 +54,21 @@ export default function About() {
                 </p>
               </li>
               <li className="feature-item">
-                <h3 className="feature-title">Managing Conflict</h3>
+                <h3 className="feature-title">Breaking Bad News</h3>
+                <p className="feature-description">
+                  Learn to deliver difficult diagnoses and prognoses with empathy and clarity.
+                </p>
+              </li>
+              <li className="feature-item">
+                <h3 className="feature-title">Conflict Resolution</h3>
                 <p className="feature-description">
                   Learn to navigate differing positions and negotiate mutual understanding for patient-centered outcomes.
                 </p>
               </li>
               <li className="feature-item">
-                <h3 className="feature-title">Clinical Decision-Making</h3>
+                <h3 className="feature-title">End-of-Life Discussion</h3>
                 <p className="feature-description">
-                  Practice explaining your thought processes behind clinical decisions during patient encounters.
-                </p>
-              </li>
-              <li className="feature-item">
-                <h3 className="feature-title">Prioritization</h3>
-                <p className="feature-description">
-                  Develop skills to triage and prioritize care for multiple patients in the emergency department.
+                  Practice discussing end-of-life care options and advance directives with patients and families.
                 </p>
               </li>
             </ul>
