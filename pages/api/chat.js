@@ -72,6 +72,8 @@ export default async function handler(req, res) {
     // Generate audio for the response
     let audioUrl = null;
     try {
+      console.log('Generating audio for response:', aiResponse.substring(0, 50) + '...');
+      
       // Use the OpenAI API to generate speech
       const audioResponse = await openai.audio.speech.create({
         model: "tts-1",
@@ -85,6 +87,8 @@ export default async function handler(req, res) {
       // Convert to base64
       const base64Audio = Buffer.from(audioData).toString('base64');
       audioUrl = `data:audio/mp3;base64,${base64Audio}`;
+      
+      console.log('Audio generated successfully, length:', base64Audio.length);
     } catch (audioError) {
       console.error('Error generating audio:', audioError);
       // Continue without audio if there's an error

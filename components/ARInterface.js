@@ -38,6 +38,13 @@ const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSig
     }
   };
 
+  // Add a useEffect to handle case type changes without causing layout shifts
+  useEffect(() => {
+    // Preload the next background image to prevent layout shifts
+    const nextImage = new window.Image();
+    nextImage.src = getBackgroundImage();
+  }, [selectedCaseType]);
+
   // Scroll to bottom of messages
   useEffect(() => {
     // Only scroll if we're in AR mode and there are messages
@@ -83,13 +90,21 @@ const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSig
 
   // Initialize audio element
   useEffect(() => {
+    console.log('Initializing audio element');
     audioRef.current = new Audio();
     audioRef.current.onended = () => {
+      console.log('Audio playback ended');
+      setIsPlayingAudio(false);
+    };
+    
+    audioRef.current.onerror = (error) => {
+      console.error('Audio element error:', error);
       setIsPlayingAudio(false);
     };
     
     return () => {
       if (audioRef.current) {
+        console.log('Cleaning up audio element');
         audioRef.current.pause();
         audioRef.current = null;
       }
@@ -147,7 +162,10 @@ const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSig
       
       // Play audio response if available
       if (data.audioUrl) {
+        console.log('Audio URL received:', data.audioUrl.substring(0, 50) + '...');
         playAudioResponse(data.audioUrl);
+      } else {
+        console.log('No audio URL in response');
       }
       
       // The response will be handled by the parent component
@@ -161,12 +179,17 @@ const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSig
 
   const playAudioResponse = async (audioUrl) => {
     if (audioRef.current) {
-      setIsPlayingAudio(true);
-      audioRef.current.src = audioUrl;
-      audioRef.current.play().catch(error => {
+      try {
+        setIsPlayingAudio(true);
+        audioRef.current.src = audioUrl;
+        await audioRef.current.play();
+        console.log('Audio playback started');
+      } catch (error) {
         console.error('Error playing audio:', error);
         setIsPlayingAudio(false);
-      });
+      }
+    } else {
+      console.error('Audio element not initialized');
     }
   };
 
@@ -194,6 +217,8 @@ const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSig
               objectFit="contain"
               priority
               className="patient-image-ar"
+              quality={100}
+              sizes="100vw"
             />
           </div>
           

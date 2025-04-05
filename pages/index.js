@@ -146,13 +146,17 @@ export default function Home() {
   const handlePreviousCaseType = () => {
     const newIndex = (caseTypeIndex - 1 + caseTypes.length) % caseTypes.length;
     setCaseTypeIndex(newIndex);
-    handleCaseTypeChange(caseTypes[newIndex]);
+    setSelectedCaseType(caseTypes[newIndex]);
+    // Prevent scrolling when changing case type
+    window.scrollTo(0, 0);
   };
   
   const handleNextCaseType = () => {
     const newIndex = (caseTypeIndex + 1) % caseTypes.length;
     setCaseTypeIndex(newIndex);
-    handleCaseTypeChange(caseTypes[newIndex]);
+    setSelectedCaseType(caseTypes[newIndex]);
+    // Prevent scrolling when changing case type
+    window.scrollTo(0, 0);
   };
   
   return (

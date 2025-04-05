@@ -345,58 +345,71 @@ body {
 
 /* Case selector */
 .case-selector {
-  background-color: var(--color-white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
-  text-align: center;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .case-title {
-  font-size: var(--font-size-xl);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
   font-weight: 600;
   color: var(--color-text);
-  margin-bottom: var(--spacing-md);
+  height: 24px;
 }
 
 .case-navigation {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-md);
+  gap: 15px;
+  height: 40px;
 }
 
 .current-case-type {
-  font-size: var(--font-size-lg);
-  font-weight: 600;
-  color: var(--color-primary);
-  padding: var(--spacing-sm) var(--spacing-md);
-  background-color: var(--color-background);
-  border-radius: var(--radius-md);
   min-width: 200px;
   text-align: center;
-  box-shadow: var(--shadow-sm);
+  padding: 8px 15px;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  border-radius: 4px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .case-nav-button {
-  background-color: var(--color-background);
-  color: var(--color-text);
+  background-color: var(--color-white);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  width: 40px;
-  height: 40px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  color: var(--color-primary);
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .case-nav-button:hover {
   background-color: var(--color-primary-light);
-  border-color: var(--color-primary);
-  transform: translateY(-2px);
+  color: var(--color-primary-dark);
+  transform: scale(1.05);
+}
+
+.case-nav-button:active {
+  transform: scale(0.95);
 }
 
 .case-buttons {
@@ -1091,56 +1104,63 @@ body {
 
 /* AR Interface */
 .ar-container {
+  height: calc(100vh - 100px);
+  min-height: 600px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100%;
-  background-color: var(--color-background);
-  position: relative;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .ar-main-view {
   flex: 1;
   position: relative;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  background-color: #000;
+  height: 80%;
 }
 
 .ar-patient-view {
-  width: 100%;
-  height: 100%;
+  flex: 1;
   position: relative;
+  background-color: var(--color-background);
+  overflow: hidden;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .patient-placeholder {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #111;
-  overflow: hidden;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-background);
+  overflow: hidden;
 }
 
 .patient-image-ar {
-  position: relative !important;
-  width: auto !important;
-  height: auto !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  object-fit: contain !important;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
 }
 
-/* Ensure the image container spans the full height and width */
-.patient-placeholder > span {
-  position: unset !important;
-  width: 100% !important;
-  height: 100% !important;
+/* Adjust the communication section to take less space */
+.ar-communication {
+  height: 20%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: var(--color-white);
+  border-top: 1px solid var(--color-border);
+  padding: 10px;
 }
 
 /* Microphone overlay */
@@ -1240,6 +1260,7 @@ body {
   color: var(--color-primary);
 }
 
+/* AR Controls */
 .ar-controls {
   position: absolute;
   bottom: 20px;
@@ -1254,21 +1275,23 @@ body {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  color: var(--color-primary);
   font-size: 24px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .ar-control-button:hover {
-  background-color: rgba(0, 0, 0, 0.9);
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Pop-up windows */
@@ -1372,14 +1395,6 @@ body {
   font-weight: 600;
 }
 
-.ar-communication {
-  height: 300px;
-  background-color: var(--color-white);
-  border-top: 1px solid var(--color-border);
-  display: flex;
-  flex-direction: column;
-}
-
 /* Animation for pop-ups */
 @keyframes slideIn {
   from {
@@ -1434,12 +1449,13 @@ body {
   font-size: 16px;
 }
 
-/* App Container */
+/* App container */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: var(--color-background);
+  height: 100vh;
+  overflow: hidden;
 }
 
 .app-header {
@@ -1481,85 +1497,67 @@ body {
 
 /* Content Container */
 .content-container {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: var(--spacing-md);
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--spacing-md);
-}
-
-.chat-section {
-  background-color: var(--color-white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  display: flex;
+  height: calc(100vh - 200px);
+  min-height: 500px;
   overflow: hidden;
 }
 
-.sidebar {
+.chat-section {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .content-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .sidebar {
-    order: -1;
-  }
+.sidebar {
+  width: 300px;
+  height: 100%;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: var(--color-white);
+  border-left: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
 }
 
-@media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    gap: var(--spacing-md);
-  }
-  
-  .main-nav {
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .interface-toggle span {
-    display: none;
-  }
-  
-  .interface-toggle {
-    padding: 8px;
-  }
+/* Ensure content container has consistent height */
+.content-container {
+  display: flex;
+  height: calc(100vh - 200px);
+  min-height: 500px;
+  overflow: hidden;
 }
 
-/* Responsive adjustments for AR interface */
-@media (max-width: 768px) {
-  .ar-vitals-popup,
-  .ar-patient-popup {
-    max-width: 250px;
-    font-size: 12px;
-  }
-  
-  .ar-control-button {
-    width: 60px;
-    height: 60px;
-    font-size: 20px;
-  }
-  
-  .ar-communication {
-    height: 250px;
-  }
-  
-  .ar-microphone-button {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .ar-stop-button {
-    width: 40px;
-    height: 40px;
-  }
+/* Ensure chat section has consistent height */
+.chat-section {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure sidebar has consistent height */
+.sidebar {
+  width: 300px;
+  height: 100%;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: var(--color-white);
+  border-left: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure AR container has consistent height */
+.ar-container {
+  height: calc(100vh - 200px);
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 /* Stylized title */
@@ -1633,4 +1631,17 @@ body {
   font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--color-text);
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  height: calc(100vh - 100px); /* Fixed height to prevent layout shifts */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 } 
