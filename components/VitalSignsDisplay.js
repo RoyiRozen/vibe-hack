@@ -1,6 +1,7 @@
 import React from 'react';
+import { FaHeartbeat } from 'react-icons/fa';
 
-const VitalSignsDisplay = ({ vitals }) => {
+const VitalSignsDisplay = ({ vitals, onVitalClick }) => {
   // Format the timestamp in a way that's consistent between server and client
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
@@ -12,43 +13,42 @@ const VitalSignsDisplay = ({ vitals }) => {
     });
   };
 
+  const handleVitalClick = (vitalName) => {
+    if (onVitalClick) {
+      onVitalClick(vitalName);
+    }
+  };
+
   return (
-    <div className="vitals-card">
+    <div className="vitals-container">
       <div className="vitals-header">
-        <h3 className="vitals-title">Vital Signs</h3>
+        <FaHeartbeat />
+        <h3>Vital Signs</h3>
         <span className="vitals-time">
           Last updated: {vitals?.timestamp ? formatTime(vitals.timestamp) : 'N/A'}
         </span>
       </div>
       
-      <div className="vitals-list">
-        <button className={`vital-button ${vitals?.heartRate?.alert ? 'vital-alert' : ''}`}>
+      <div className="vitals-grid">
+        <div className="vital-item">
           <span className="vital-label">Heart Rate</span>
-          <span className={`vital-value ${vitals?.heartRate?.alert ? 'vital-alert-text' : ''}`}>
-            {vitals?.heartRate?.value || 'N/A'} bpm
-          </span>
-        </button>
+          <span className="vital-value">{vitals?.heartRate || 'N/A'} bpm</span>
+        </div>
         
-        <button className={`vital-button ${vitals?.bloodPressure?.alert ? 'vital-alert' : ''}`}>
+        <div className="vital-item">
           <span className="vital-label">Blood Pressure</span>
-          <span className={`vital-value ${vitals?.bloodPressure?.alert ? 'vital-alert-text' : ''}`}>
-            {vitals?.bloodPressure?.value || 'N/A'} mmHg
-          </span>
-        </button>
+          <span className="vital-value">{vitals?.bloodPressure || 'N/A'}</span>
+        </div>
         
-        <button className={`vital-button ${vitals?.oxygenSaturation?.alert ? 'vital-alert' : ''}`}>
+        <div className="vital-item">
           <span className="vital-label">Oxygen Saturation</span>
-          <span className={`vital-value ${vitals?.oxygenSaturation?.alert ? 'vital-alert-text' : ''}`}>
-            {vitals?.oxygenSaturation?.value || 'N/A'}%
-          </span>
-        </button>
+          <span className="vital-value">{vitals?.oxygenSaturation || 'N/A'}%</span>
+        </div>
         
-        <button className={`vital-button ${vitals?.temperature?.alert ? 'vital-alert' : ''}`}>
+        <div className="vital-item">
           <span className="vital-label">Temperature</span>
-          <span className={`vital-value ${vitals?.temperature?.alert ? 'vital-alert-text' : ''}`}>
-            {vitals?.temperature?.value || 'N/A'}°C
-          </span>
-        </button>
+          <span className="vital-value">{vitals?.temperature || 'N/A'}°F</span>
+        </div>
       </div>
       
       {vitals?.alerts?.length > 0 && (
