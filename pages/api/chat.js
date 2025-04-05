@@ -17,6 +17,15 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Message is required' });
     }
 
+    // Check if OpenAI API key is available
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('OpenAI API key is missing');
+      return res.status(500).json({ 
+        error: 'OpenAI API key is not configured',
+        details: 'Please set the OPENAI_API_KEY environment variable in your Vercel project settings.'
+      });
+    }
+
     // Initialize OpenAI API with the newer format
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
@@ -52,6 +61,8 @@ export default async function handler(req, res) {
       systemPrompt = "You are a medical communication assistant helping healthcare providers practice end-of-life discussions. You simulate a patient named Mr. John Martinez, a 65-year-old male with a terminal condition. Respond as if you are the patient, sharing your thoughts, fears, and wishes about end-of-life care. Keep responses concise and realistic.";
     }
 
+    console.log('Sending request to OpenAI API with case type:', caseType);
+    
     // Call OpenAI API for chat completion with the newer format
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -68,6 +79,7 @@ export default async function handler(req, res) {
 
     // Extract the response
     const aiResponse = completion.choices[0].message.content;
+    console.log('Received response from OpenAI:', aiResponse.substring(0, 50) + '...');
 
     // Generate audio for the response
     let audioUrl = null;
@@ -104,7 +116,8 @@ export default async function handler(req, res) {
     console.error('Error in chat API:', error);
     return res.status(500).json({ 
       error: 'Failed to process request',
-      details: error.message || 'Unknown error'
+      details: error.message || 'Unknown error',
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
 } 

@@ -5,9 +5,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="CareView - Medical Communication Training" />
-        <title>CareView</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>CareView - Medical Communication Training</title>
+        <meta name="description" content="Practice medical communication skills with AI-powered patient simulations" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Component {...pageProps} />
     </>

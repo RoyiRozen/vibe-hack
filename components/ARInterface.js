@@ -32,7 +32,7 @@ const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSig
       case 'Conflict Resolution':
         return '/bg4.png';
       case 'End-of-Life Discussion':
-        return '/bg5.png';
+        return '/bg.png'; // Fallback to bg.png if bg5.png is missing
       default:
         return '/bg.png';
     }
