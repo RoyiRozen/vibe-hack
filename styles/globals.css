@@ -136,22 +136,23 @@ body {
 
 /* Patient image */
 .patient-image-container {
-  position: absolute;
-  top: calc(var(--spacing-lg) + 40px);
-  right: var(--spacing-lg);
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 3px solid var(--color-primary);
-  box-shadow: var(--shadow-md);
-  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .patient-image {
-  width: 100%;
-  height: 100%;
+  border-radius: 50%;
   object-fit: cover;
+  border: 3px solid var(--color-primary);
+  box-shadow: var(--shadow-md);
+  width: 80px;
+  height: 80px;
+}
+
+.patient-info {
+  flex: 1;
+  margin-right: var(--spacing-md);
 }
 
 /* Chat area */
@@ -208,11 +209,14 @@ body {
 }
 
 .patient-header {
-  margin-bottom: var(--spacing-md);
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: var(--spacing-md);
-  padding-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .patient-image-sidebar {
@@ -1120,13 +1124,23 @@ body {
   align-items: center;
   background-color: #111;
   overflow: hidden;
+  position: relative;
 }
 
-.patient-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.patient-image-ar {
+  position: relative !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+}
+
+/* Ensure the image container spans the full height and width */
+.patient-placeholder > span {
+  position: unset !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* Microphone overlay */
@@ -1232,13 +1246,13 @@ body {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 20px;
   z-index: 10;
 }
 
 .ar-control-button {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
@@ -1248,22 +1262,23 @@ body {
   align-items: center;
   cursor: pointer;
   transition: all 0.2s;
+  font-size: 24px;
 }
 
 .ar-control-button:hover {
   background-color: rgba(0, 0, 0, 0.9);
   transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* Pop-up windows */
-.ar-vitals-popup,
-.ar-patient-popup {
+.ar-vitals-popup {
   position: absolute;
   top: 20px;
   right: 20px;
   background-color: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
-  padding: 15px;
+  padding: 20px;
   color: white;
   max-width: 300px;
   z-index: 5;
@@ -1271,19 +1286,51 @@ body {
   animation: slideIn 0.3s ease-out;
 }
 
+.ar-patient-popup {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  color: white;
+  max-width: 300px;
+  z-index: 5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  animation: slideInLeft 0.3s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 .popup-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding-bottom: 10px;
 }
 
 .popup-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
   color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.popup-header h3 svg {
+  font-size: 24px;
 }
 
 .popup-close-button {
@@ -1304,19 +1351,25 @@ body {
 .patient-info-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .vital-sign {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
-  font-size: 14px;
+  margin-bottom: 8px;
+  font-size: 16px;
 }
 
 .patient-info-content p {
-  margin: 5px 0;
-  font-size: 14px;
+  margin: 8px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.patient-info-content strong {
+  color: var(--color-primary);
+  font-weight: 600;
 }
 
 .ar-communication {
@@ -1489,8 +1542,9 @@ body {
   }
   
   .ar-control-button {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
   }
   
   .ar-communication {

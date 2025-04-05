@@ -7,8 +7,9 @@ import { FaInfoCircle } from 'react-icons/fa';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { FaVolumeUp } from 'react-icons/fa';
 import { FaHeartbeat } from 'react-icons/fa';
+import Image from 'next/image';
 
-const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSigns }) => {
+const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSigns, selectedCaseType }) => {
   const messagesEndRef = useRef(null);
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
@@ -18,6 +19,24 @@ const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSig
   const [showPatientInfo, setShowPatientInfo] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const audioRef = useRef(null);
+
+  // Get background image based on case type
+  const getBackgroundImage = () => {
+    switch (selectedCaseType) {
+      case 'Difficult Conversation':
+        return '/bg.png';
+      case 'Patient-Centered Communication':
+        return '/bg2.png';
+      case 'Breaking Bad News':
+        return '/bg3.png';
+      case 'Conflict Resolution':
+        return '/bg4.png';
+      case 'End-of-Life Discussion':
+        return '/bg5.png';
+      default:
+        return '/bg.png';
+    }
+  };
 
   // Scroll to bottom of messages
   useEffect(() => {
@@ -161,7 +180,14 @@ const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSig
         <div className="ar-patient-view">
           {/* Patient video feed would go here */}
           <div className="patient-placeholder">
-            <img src="/bg.png" alt="Patient Background" className="patient-image" />
+            <Image
+              src={getBackgroundImage()}
+              alt="Patient Background"
+              layout="fill"
+              objectFit="contain"
+              priority
+              className="patient-image-ar"
+            />
           </div>
           
           {/* Microphone overlay */}
@@ -257,18 +283,21 @@ const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSig
         {showPatientInfo && (
           <div className="ar-patient-popup">
             <div className="popup-header">
-              <h3>Patient Information</h3>
-              <button 
+              <h3>
+                <FaInfoCircle />
+                Patient Information
+              </h3>
+              <button
                 className="popup-close-button"
                 onClick={togglePatientInfo}
-                aria-label="Close patient info"
+                aria-label="Close patient information"
               >
                 ×
               </button>
             </div>
             <div className="patient-info-content">
               <p><strong>Name:</strong> {patientData.name}</p>
-              <p><strong>Age:</strong> 65</p>
+              <p><strong>Age:</strong> {patientData.age}</p>
               <p><strong>Chief Complaint:</strong> {patientData.chiefComplaint}</p>
               <p><strong>History:</strong> {patientData.history}</p>
             </div>

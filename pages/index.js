@@ -227,19 +227,19 @@ export default function Home() {
             
             <div className="sidebar">
               <div className="patient-header">
-                <div className="patient-image-container">
-                  <Image
-                    src="/JohnMartinez.png"
-                    alt="Patient"
-                    width={150}
-                    height={150}
-                    className="patient-image"
-                  />
-                </div>
                 <div className="patient-info">
                   <h2>{patientData.name}</h2>
                   <p>Age: 65</p>
                   <p>Chief Complaint: {patientData.chiefComplaint}</p>
+                </div>
+                <div className="patient-image-container">
+                  <Image
+                    src="/JohnMartinez.png"
+                    alt="Patient"
+                    width={80}
+                    height={80}
+                    className="patient-image"
+                  />
                 </div>
               </div>
               
@@ -259,6 +259,7 @@ export default function Home() {
             isLoading={isLoading}
             patientData={patientData}
             vitalSigns={vitals}
+            selectedCaseType={selectedCaseType}
           />
         )}
       </main>
