@@ -1,0 +1,40 @@
+{
+  "steps": [
+    {
+      "id": 1,
+      "name": "Partnership",
+      "description": "Build rapport and establish a collaborative relationship",
+      "example": "I'm here to help you understand what's happening and work together to address your concerns."
+    },
+    {
+      "id": 2,
+      "name": "Empathy",
+      "description": "Acknowledge and validate the patient's emotions",
+      "example": "I can see that this news is really difficult to process, and it's completely normal to feel overwhelmed."
+    },
+    {
+      "id": 3,
+      "name": "Apology",
+      "description": "Express regret for the situation or any miscommunication",
+      "example": "I'm sorry that you've been waiting so long without clear information."
+    },
+    {
+      "id": 4,
+      "name": "Respect",
+      "description": "Show appreciation for the patient's perspective and concerns",
+      "example": "I appreciate you being so open with me about your worries and your need to discuss this with your wife."
+    },
+    {
+      "id": 5,
+      "name": "Legitimization",
+      "description": "Validate the patient's feelings and concerns as reasonable",
+      "example": "Your concerns about the financial impact and need to involve your wife are completely valid and important to address."
+    },
+    {
+      "id": 6,
+      "name": "Support",
+      "description": "Offer concrete assistance and next steps",
+      "example": "We can work together to create a plan that addresses both your medical needs and your practical concerns."
+    }
+  ]
+} 
