@@ -3,7 +3,7 @@ import { FaMicrophone } from 'react-icons/fa';
 import { FaMicrophoneSlash } from 'react-icons/fa';
 import { FaStop } from 'react-icons/fa';
 
-const ChatInterface = ({ messages, onSendMessage, isLoading }) => {
+const ChatInterface = ({ messages, onSendMessage, isLoading, selectedCaseType }) => {
   const messagesEndRef = useRef(null);
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
@@ -87,7 +87,14 @@ const ChatInterface = ({ messages, onSendMessage, isLoading }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({ 
+          message: text,
+          caseType: selectedCaseType || 'Difficult Conversation',
+          history: messages.map(msg => ({
+            sender: msg.sender,
+            text: msg.text
+          }))
+        }),
       });
       
       if (!response.ok) {

@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
 
 // Ensure your OpenAI API key is set as an environment variable in Vercel
 if (!process.env.OPENAI_API_KEY) {
@@ -17,12 +17,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Message is required' });
     }
 
-    // Initialize OpenAI API
-    const configuration = new Configuration({
+    // Initialize OpenAI API with the newer format
+    const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
-    
-    const openai = new OpenAIApi(configuration);
 
     // Get conversation history from the request
     const conversationHistory = req.body.history || [];
@@ -54,8 +52,8 @@ export default async function handler(req, res) {
       systemPrompt = "You are a medical communication assistant helping healthcare providers practice end-of-life discussions. You simulate a patient named Mr. John Martinez, a 65-year-old male with a terminal condition. Respond as if you are the patient, sharing your thoughts, fears, and wishes about end-of-life care. Keep responses concise and realistic.";
     }
 
-    // Call OpenAI API for chat completion
-    const completion = await openai.createChatCompletion({
+    // Call OpenAI API for chat completion with the newer format
+    const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
         {
@@ -69,28 +67,17 @@ export default async function handler(req, res) {
     });
 
     // Extract the response
-    const aiResponse = completion.data.choices[0].message.content;
+    const aiResponse = completion.choices[0].message.content;
 
     // Generate audio for the response
     let audioUrl = null;
     try {
       // Use the OpenAI API to generate speech
-      const audioResponse = await fetch('https://api.openai.com/v1/audio/speech', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
-        },
-        body: JSON.stringify({
-          model: "tts-1",
-          voice: "alloy",
-          input: aiResponse
-        })
+      const audioResponse = await openai.audio.speech.create({
+        model: "tts-1",
+        voice: "alloy",
+        input: aiResponse
       });
-      
-      if (!audioResponse.ok) {
-        throw new Error(`OpenAI API error: ${audioResponse.status}`);
-      }
       
       // Get the audio data as an ArrayBuffer
       const audioData = await audioResponse.arrayBuffer();
@@ -111,6 +98,9 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error('Error in chat API:', error);
-    return res.status(500).json({ error: 'Failed to process request' });
+    return res.status(500).json({ 
+      error: 'Failed to process request',
+      details: error.message || 'Unknown error'
+    });
   }
 } 

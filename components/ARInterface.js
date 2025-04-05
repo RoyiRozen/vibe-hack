@@ -129,7 +129,14 @@ const ARInterface = ({ messages, onSendMessage, isLoading, patientData, vitalSig
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({ 
+          message: text,
+          caseType: selectedCaseType || 'Difficult Conversation',
+          history: messages.map(msg => ({
+            sender: msg.sender,
+            text: msg.text
+          }))
+        }),
       });
       
       if (!response.ok) {

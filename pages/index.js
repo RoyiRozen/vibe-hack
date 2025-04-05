@@ -222,6 +222,7 @@ export default function Home() {
                 messages={messages}
                 onSendMessage={handleSendMessage}
                 isLoading={isLoading}
+                selectedCaseType={selectedCaseType}
               />
             </div>
             
