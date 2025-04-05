@@ -1,5 +1,10 @@
 import { OpenAI } from 'openai';
 
+// Ensure your OpenAI API key is set as an environment variable in Vercel
+if (!process.env.OPENAI_API_KEY) {
+  console.error('OpenAI API key is not set in environment variables');
+}
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
